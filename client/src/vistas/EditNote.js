@@ -1,12 +1,12 @@
 import { useRouteMatch } from "react-router-dom";
 import { Route, NavLink } from "react-router-dom";
-import Me from "./Me";
+import Me from "./Home"
 
-const About = () => {
+const EditNote = () => {
     const match = useRouteMatch();
     return (
         <main>
-        <h1>Trabajo final</h1>
+        <h1>Editar la nota</h1>
             <p>
             Este es un trabajo basado en algo
             </p>
@@ -20,4 +20,6 @@ const About = () => {
     );
 }
 
-export default About;
+export default EditNote;
+
+//About.js
