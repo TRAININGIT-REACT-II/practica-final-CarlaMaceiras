@@ -1,11 +1,11 @@
-.todoslist_item label {
+.noteList_item label {
     cursor: pointer;
     font-size: 1rem;
     margin-bottom: 0;
     font-weight: normal;
   }
   
-  .todoslist_item input {
+  .noteList_item input {
     display: inline-block;
     margin: 0 0.25rem 0 0;
     padding: 0;
@@ -13,6 +13,6 @@
     height: auto;
   }
   
-  .todoslist_item.completed {
+  .noteList_item.completed {
     text-decoration: line-through;
   }

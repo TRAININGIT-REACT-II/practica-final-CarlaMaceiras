@@ -5,14 +5,29 @@ const SignIn = () => {
 
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-
-    const dispatch = useDispatch();
+    const [error, setError] = useState("");
 
     const handleClick = (e) => {
-        e.preventDefault();             //Para que no haga refresh por ser un form
+      e.preventDefault();         
+      
+      console.log( name, password)
 
-        dispatch(updateName(name, password));
-        console.log("REDUX", getState());
+      fetch("/api/register", {
+        method: "POST",
+        body: JSON.stringify({
+          username: name,
+          password: password
+        })
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.error != null) {
+            setError(json.error)
+          } else {
+            console.log(json)
+          }
+        })
+        .catch((err) => console.log(err));
     }
 
     
@@ -54,6 +69,12 @@ const SignIn = () => {
                 onClick={handleClick}
                 >Registrarse</button>
             </div>
+
+            {error.length > 0 && (
+              <p>
+                Hubo un error: <b>{error}</b>
+              </p>
+            )}
           </form>
   
         </div>

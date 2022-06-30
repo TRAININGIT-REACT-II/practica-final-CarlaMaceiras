@@ -3,6 +3,7 @@ import actionTypes from "./types"
 
 export const addNotes= (notes) => ({
     type: actionTypes.ADD_NOTE,
+    complete: false,
     notes
 });
 

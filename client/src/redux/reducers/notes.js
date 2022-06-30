@@ -24,7 +24,7 @@ const reducer = (state= initialState, action) => {
                         ...state.notes[action.index],
                         completed: true,
                     },
-                    ...state.notes.slice(action.index +1)
+                    ...state.notes.slice(action.index + 1)
                 ]
             }
         default:

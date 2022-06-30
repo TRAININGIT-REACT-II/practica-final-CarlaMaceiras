@@ -10,7 +10,7 @@ const reducer = (state= initialState, action) => {
         case actionTypes.UPDATE_NAME:
             const newState = {
                 name: action.name,
-                password:action.password
+                password: action.password
             };
             return newState;
 

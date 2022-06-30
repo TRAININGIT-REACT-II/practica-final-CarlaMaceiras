@@ -1,33 +1,71 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
+
 import { addNotes } from "../redux/actions/notes";
+import store from "../redux/store";
+
+// import * as noteActions from "../redux/actions/notes"
 
 const CreateNote = () => {
   
     const [newNote, setNewNote] = useState("");
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+
+    
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(addNotes(newNote));
-    }
+        const newNoteReq = {
+          title: "titulo",
+          content: newNote,
+          userId: 1
+        };
 
-    const onChange = (e) => {
-      const { value } = e.target;
-      // Utilizamos el estado de redux
-      setNewNote(value);
+        //Post a la API
+        fetch("/api/notes", {
+          method: "POST",
+          headers: {
+            // 'api-token' :  logUser.token,
+            "Content-type": "aplication/json"
+          },
+          body: JSON.stringify(newNoteReq),
+          
+        })
+          .then((res) => res.json())
+          .then((json) => setNewNote(
+              [
+                {
+                  ...newNoteReq,
+                  ...json,
+                },
+              ].concat(newNote)
+            )
+          )
+
+        // store.dispatch(noteActions.addNotes(newNote));
+        // dispatch(addNotes(newNote))
+
+        // console.log("REDUX", store.getState());
     };
+
+    
+
+    // const onChange = (e) => {
+    //   const { value } = e.target;
+    //   // Utilizamos el estado de redux
+    //   setNewNote(value);
+    // };
     
     return (
       <section aria-labelledby="admin-title">
         <h2 id="admin-title">Nueva Nota</h2>
 
-        <form onSubmit={onSubmit}>
+        <form >
         
-          <label for="note">Note:</label>
+          <label htmlFor="note">Note:</label>
 
           <input 
               type="text" 
@@ -35,15 +73,15 @@ const CreateNote = () => {
               required
               placeholder="Escribe tu nota aquí..."
               value= {newNote}
-              onChange={onChange}
-              // onChange= {(e) => setNewNote(e.target.value)}
+              // onChange={onChange}
+              onChange= {(e) => setNewNote(e.target.value)}
           />
 
           <div className="boton-login">
               <button 
-                  // type="submit" 
-                  // class="btn btn-primary" 
-                  // onClick={onSubmit}
+                  type="submit" 
+                  className="btn btn-primary" 
+                  onClick={onSubmit}
                   >Añadir
               </button>
           </div>

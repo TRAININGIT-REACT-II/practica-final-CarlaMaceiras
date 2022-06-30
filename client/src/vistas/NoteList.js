@@ -1,15 +1,43 @@
 import { getNotes } from "../selectors/notes";
 import { useSelector, useDispatch } from "react-redux";
-
+import { completeNote } from "../redux/actions/notes";
+import { useState } from "react";
 
 const NoteList = () => {
     
     const userName = "";
-    const notes = useSelector((state) => getNotes(state));
+    const [notes, setNotes] = useState([]);
+    const [error, setError] = useState("");
 
-    const dispatch = useDispatch();
+    const fetchNotes = () => {
+        fetch("/api/notes"), {
+            headers: {
+                "api-token": token,
+            }
+        }
+            .then((res) => { 
+                return res.json()
+            })
+            .then((json) => {
+                if (json.error != null) {
+                    setError(json.error);
+                } else {
+                    setNotes(json);
+                }
+            })
+            .catch((err) => console.log(err));
+    }
 
-    const onComplete = (i) => {};
+
+    // const dispatch = useDispatch();
+
+    // const onComplete = (i) => {
+    //     dispatch(completeNote(i))
+    // };
+
+    useEffect(() => {
+        fetchNotes();
+    }), [token];
     
     
     return (
@@ -18,7 +46,7 @@ const NoteList = () => {
             <h2>Listado de notas</h2>
 
             <ul className="noteList">
-                {notes.map((note, i) => {
+                {/* {notes.map((note, i) => {
                     <li
                         className={`noteList_item ${note.complete ? "completed" : ""}`}
                         key = {i}
@@ -33,7 +61,9 @@ const NoteList = () => {
                             {note.note}
                         </label>
                     </li>
-                })}
+                })} */}
+                HOLA
+                {notes}
             </ul>
         </main>
     );
